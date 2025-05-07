@@ -17,19 +17,64 @@
       font-weight: normal;
       font-style: normal;
     }
-
+    
+    body {
+            background-image: url('assets/bg-8.webp'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+        }
+        .character-img {
+            max-width: 500px;
+            border-radius: 10px;
+        }
+    
+        .container-result {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh;
+        }
     /* Use more styles as needed */
   
   </style>
 </head>
 <body class="p-4">
-
-  <!-- Complete this part -->
+  <div id="app">
+    <h1 class="text-center" style="font-family: 'Luna'; color:rgb(227, 153, 25)">Which Ghibli Character Are You?</h1>
+    <h3 class="text" style="color:rgb(252, 163, 30)">Select your traits! </h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" v-for="trait in availableTraits" :key="trait">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" :id="trait" :value="trait" v-model="selectedTraits">
+                    <label class="form-check-label" :for="trait">{{ trait }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-warning btn-block" @click="findCharacter">Reveal My Character</button>
+    <div class="container-result" >
+    <div v-if="result">
+        <h2 class="text" style="color:rgb(252, 163, 30)">You are most like {{ result.name }}!</h2>
+        <img :src="result.image" alt="{{ result.name }}" class="character-img">
+        <p class="text" style="color:rgb(248, 248, 247)">{{ result.description }}</p>
+    </div>
+    <div v-else-if="noResult">
+        <div class="alert alert-warning" role="alert">
+            Hmm...Either you didn't select any traits or we couldn't find a match. Please try again.
+        </div>
+    </div>
+  </div>
+</div>
 
 <script>
 Vue.createApp({
   data() {
     return {
+      availableTraits: ['Ambitious', 'Brave', 'Curious', 'Adventurous', 'Loyal', 'Funny', 'Kind', 'Quiet', 'Mischievous', 'Dreamy', 'Hardworking', 'Protective', 'Independent', 'Empathetic', 'Mysterious'],
+      selectedTraits: [],
       /* complete this part */
       characters: [
         {
